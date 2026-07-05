@@ -1769,6 +1769,193 @@ body {
     border-radius: 24px;
 }
 
+/* --- Mobile Responsive Layout Tweaks (Screen widths up to 768px) --- */
+@media (max-width: 768px) {
+    /* Hide the scrolling canvas container on mobile */
+    .canvas-container {
+        display: none !important;
+    }
+
+    /* Beautiful fixed glassy background gradient for smooth, low-latency mobile scrolling */
+    body {
+        background: radial-gradient(circle at 20% 15%, rgba(42, 24, 16, 0.45) 0%, transparent 60%),
+                    radial-gradient(circle at 80% 85%, rgba(178, 210, 164, 0.06) 0%, transparent 60%),
+                    #090707 !important;
+        background-attachment: fixed !important;
+        background-size: cover;
+    }
+
+    /* Adjust padding for signature sections to avoid huge gaps on mobile */
+    .section-signature {
+        padding: 4rem 1.25rem !important;
+    }
+
+    .section-header.solid-panel {
+        padding: 2.5rem 1.5rem !important;
+        margin-bottom: 3rem !important;
+    }
+
+    /* Optimize Hero Glass Card spacing and margins */
+    .hero-glass-card {
+        padding: 3rem 1.5rem !important;
+        margin: 0 auto;
+        border-radius: 20px;
+    }
+
+    .hero-title {
+        font-size: 2.2rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 2rem !important;
+        padding: 0 0.5rem;
+    }
+
+    /* Reduce vertical spacing for the scroll indicator */
+    .scroll-indicator {
+        bottom: 1.5rem !important;
+    }
+
+    /* Adjust offerings layout to feel tight and premium */
+    .offerings-list {
+        gap: 3.5rem !important;
+        margin-top: 2.5rem !important;
+    }
+
+    .offering-item {
+        gap: 1.25rem !important;
+    }
+
+    .offering-image-wrapper {
+        min-height: 260px !important;
+        border-radius: 20px !important;
+    }
+
+    .offering-info {
+        padding: 2rem 1.5rem !important;
+        border-radius: 20px !important;
+    }
+
+    .item-title {
+        font-size: 1.5rem !important;
+        line-height: 1.3 !important;
+    }
+
+    .item-description {
+        font-size: 0.9rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .btn-add-order {
+        padding: 0.7rem 1.5rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* Optimize Location Details spacing */
+    .location-details-column {
+        padding: 2.5rem 1.25rem !important;
+        border-radius: 24px !important;
+    }
+
+    .location-title {
+        font-size: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .location-description {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .location-image-wrapper {
+        height: 260px !important;
+        border-radius: 20px !important;
+    }
+
+    .info-details-grid {
+        gap: 1.25rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .info-icon {
+        font-size: 1.5rem !important;
+    }
+
+    .info-text h4 {
+        font-size: 0.9rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .info-text p {
+        font-size: 0.85rem !important;
+        line-height: 1.4 !important;
+    }
+
+    .btn-maps {
+        padding: 0.8rem 1.75rem !important;
+        font-size: 0.85rem !important;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Optimize CTA card layouts */
+    .section-cta {
+        padding: 4rem 1.25rem !important;
+        min-height: auto !important;
+    }
+
+    .cta-card {
+        padding: 3rem 1.5rem !important;
+        border-radius: 24px !important;
+    }
+
+    .cta-title {
+        font-size: 2rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .cta-subtitle {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 2.5rem !important;
+    }
+
+    .cta-actions {
+        margin-bottom: 0 !important;
+    }
+
+    .btn-order-now-cta,
+    .btn-reserve-table-cta {
+        font-size: 1rem !important;
+        padding: 0.9rem 2rem !important;
+    }
+}
+
+/* Extra optimization for very small mobile screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .brand-logo-preload {
+        font-size: 2.5rem !important;
+    }
+
+    .hero-title {
+        font-size: 1.85rem !important;
+    }
+
+    .section-title {
+        font-size: 2rem !important;
+    }
+
+    .offering-image-wrapper {
+        min-height: 220px !important;
+    }
+}
+
 
 
 

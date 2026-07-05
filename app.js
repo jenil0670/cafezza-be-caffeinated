@@ -1,12 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
     const html = document.documentElement;
     const canvas = document.getElementById("animation-canvas");
-    const context = canvas.getContext("2d");
-
     const preloader = document.getElementById("preloader");
     const loaderBar = document.getElementById("loader-bar");
     const loaderText = document.getElementById("loader-text");
 
+    // Detect mobile viewport
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+        // Fast-path for mobile: immediately hide preloader and skip canvas animation
+        if (preloader) {
+            preloader.style.opacity = "0";
+            preloader.style.visibility = "hidden";
+        }
+        document.body.style.overflow = "auto";
+        if (canvas) {
+            canvas.style.display = "none";
+        }
+        
+        // Initialize mobile elements
+        setupIntersectionObserver();
+        setupMobileMenu();
+        return;
+    }
+
+    const context = canvas.getContext("2d");
     const frameCount = 300;
     const images = [];
     let loadedCount = 0;
