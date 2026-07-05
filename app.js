@@ -8,8 +8,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const loaderText = document.getElementById("loader-text");
 
     const frameCount = 300;
-    const images = [];
+    const images = new Array(frameCount + 1); // 1-indexed to match filenames
     let loadedCount = 0;
+    let appInitialized = false;
+
+    // Load every 2nd frame to save bandwidth and memory (151 frames total)
+    const frameStep = 2;
+    const framesToLoad = [];
+    framesToLoad.push(1); // Always load the first critical frame
+    for (let i = 3; i < frameCount; i += frameStep) {
+        framesToLoad.push(i);
+    }
+    if (!framesToLoad.includes(frameCount)) {
+        framesToLoad.push(frameCount); // Always load the last frame
+    }
+
+    const totalToLoad = framesToLoad.length;
+    let queueIndex = 0;
+    const maxConcurrent = 4; // limit concurrent connections to prevent network congestion
 
     // Helper to format frame path to upscaled folder
     const getFramePath = (index) => {
@@ -17,39 +33,81 @@ document.addEventListener("DOMContentLoaded", () => {
         return `upscaled_frames/ezgif-frame-${frameNum}.jpg`;
     };
 
-    // Preload all frames
+    // Find the closest loaded frame to a requested index using an outward search
+    function getClosestLoadedFrame(index) {
+        for (let offset = 0; offset < frameCount; offset++) {
+            const left = index - offset;
+            const right = index + offset;
+
+            if (left >= 1 && images[left]) {
+                return left;
+            }
+            if (right <= frameCount && images[right]) {
+                return right;
+            }
+            if (left < 1 && right > frameCount) {
+                break;
+            }
+        }
+        return -1;
+    }
+
+    // Queue-based sequential background preloader
     function preloadFrames() {
-        // Disable body scroll during loading
+        // Disable body scroll during initial load
         document.body.style.overflow = "hidden";
 
-        for (let i = 1; i <= frameCount; i++) {
-            const img = new Image();
-            img.src = getFramePath(i);
-            img.onload = () => {
-                loadedCount++;
-                const progress = Math.round((loadedCount / frameCount) * 100);
-                
-                // Update Loader GUI
-                loaderBar.style.width = `${progress}%`;
-                loaderText.textContent = `Loading Cinematic Experience ${progress}%`;
-
-                if (loadedCount === frameCount) {
-                    initApp();
-                }
-            };
-            img.onerror = () => {
-                // If a frame fails to load, count it anyway so we don't block app launch
-                loadedCount++;
-                const progress = Math.round((loadedCount / frameCount) * 100);
-                loaderBar.style.width = `${progress}%`;
-                loaderText.textContent = `Loading Cinematic Experience ${progress}%`;
-
-                if (loadedCount === frameCount) {
-                    initApp();
-                }
-            };
-            images.push(img);
+        // Kick off initial concurrent loaders
+        for (let i = 0; i < Math.min(maxConcurrent, totalToLoad); i++) {
+            loadNext();
         }
+    }
+
+    function loadNext() {
+        if (queueIndex >= totalToLoad) return;
+
+        const index = framesToLoad[queueIndex++];
+        const img = new Image();
+        img.src = getFramePath(index);
+
+        img.onload = () => {
+            // Decode image asynchronously off the main thread before drawing
+            img.decode().then(() => {
+                images[index] = img;
+                handleFrameLoaded(index);
+            }).catch(err => {
+                console.warn(`Off-thread decoding failed for frame ${index}, falling back`, err);
+                images[index] = img;
+                handleFrameLoaded(index);
+            });
+        };
+
+        img.onerror = () => {
+            console.error(`Failed to load frame ${index}`);
+            handleFrameLoaded(index);
+        };
+    }
+
+    function handleFrameLoaded(index) {
+        loadedCount++;
+
+        // Initialize app as soon as frame 1 (or any critical frame) loads
+        const criticalIndices = [1, 3, 5];
+        const loadedCritical = criticalIndices.filter(idx => images[idx]).length;
+
+        if (loadedCritical >= 1 && !appInitialized) {
+            initApp();
+        }
+
+        // Update progress bar during the initial critical phase
+        if (!appInitialized) {
+            const progress = Math.min(Math.round((loadedCount / 3) * 100), 100);
+            loaderBar.style.width = `${progress}%`;
+            loaderText.textContent = `Preparing Cinematic Experience...`;
+        }
+
+        // Fetch next frame in queue
+        loadNext();
     }
 
     // Canvas scaling to match viewport layout and pixel density (retina)
@@ -59,13 +117,23 @@ document.addEventListener("DOMContentLoaded", () => {
         canvas.height = window.innerHeight * dpr;
         context.resetTransform();
         context.scale(dpr, dpr);
+        
+        // Update dimensions and positions that change when resized
+        updateMaxScroll();
+        if (typeof updateSectionPositions === "function") {
+            updateSectionPositions();
+        }
+        
         drawCurrentFrame();
     }
 
     // Cover drawing logic (similar to background-size: cover)
     function drawCurrentFrame() {
-        const frameToDraw = Math.round(currentFrameIndex);
-        const img = images[frameToDraw];
+        const frameIndex = Math.round(currentFrameIndex);
+        const closestIndex = getClosestLoadedFrame(frameIndex);
+        if (closestIndex === -1) return;
+
+        const img = images[closestIndex];
         if (!img) return;
 
         const canvasWidth = window.innerWidth;
@@ -90,14 +158,36 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentFrameIndex = 0;
     let targetFrameIndex = 0;
     let isAnimating = false;
-    const lerpFactor = 0.12; // Controls the scroll animation inertia
+    const lerpFactor = 0.08; // Adjusted to 0.08 for extra buttery inertia
+
+    let maxScrollTop = 0;
+    let sectionPositions = [];
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    // Recalculates maximum scroll to avoid reading scrollHeight during scroll events
+    function updateMaxScroll() {
+        maxScrollTop = html.scrollHeight - window.innerHeight;
+    }
+
+    // Recalculates positions and offsets of the sections to avoid reflows during scroll
+    function updateSectionPositions() {
+        const sections = [
+            document.getElementById("section-hero"),
+            document.getElementById("section-signature"),
+            document.getElementById("section-location")
+        ].filter(Boolean);
+
+        sectionPositions = sections.map(section => ({
+            id: section.getAttribute("id"),
+            top: section.offsetTop,
+            height: section.offsetHeight
+        }));
+    }
 
     function updateTargetFrame() {
-        const scrollTop = window.scrollY || html.scrollTop;
-        const maxScrollTop = html.scrollHeight - window.innerHeight;
-        
         if (maxScrollTop <= 0) return;
 
+        const scrollTop = window.scrollY || html.scrollTop;
         const scrollFraction = scrollTop / maxScrollTop;
         targetFrameIndex = scrollFraction * (frameCount - 1);
 
@@ -143,30 +233,27 @@ document.addEventListener("DOMContentLoaded", () => {
         elements.forEach(el => observer.observe(el));
     }
 
-    // Navigation Active Link Highlighting on Scroll
+    // Navigation Active Link Highlighting on Scroll (Uses cached section positions to avoid layout thrashing)
     function setupNavHighlight() {
-        const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll(".nav-link");
-
         window.addEventListener("scroll", () => {
             let currentSectionId = "";
             const scrollPos = window.scrollY + 200; // Offset for header height
 
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                
-                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                    currentSectionId = section.getAttribute("id");
+            for (const section of sectionPositions) {
+                if (scrollPos >= section.top && scrollPos < section.top + section.height) {
+                    currentSectionId = section.id;
+                    break;
                 }
-            });
+            }
 
             navLinks.forEach(link => {
-                link.classList.remove("active");
-                if (link.getAttribute("href") === `#${currentSectionId}`) {
+                const href = link.getAttribute("href");
+                if (href === `#${currentSectionId}`) {
                     link.style.color = "var(--text-primary)";
-                } else {
+                    link.classList.add("active");
+                } else if (href && href.startsWith("#")) {
                     link.style.color = "var(--text-secondary)";
+                    link.classList.remove("active");
                 }
             });
         });
@@ -201,6 +288,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize application after loading resources
     function initApp() {
+        if (appInitialized) return;
+        appInitialized = true;
+
         // Fade out preloader
         preloader.style.opacity = "0";
         preloader.style.visibility = "hidden";
@@ -213,6 +303,8 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("scroll", updateTargetFrame);
         
         // Initial setup calls
+        updateMaxScroll();
+        updateSectionPositions();
         resizeCanvas();
         updateTargetFrame();
         setupIntersectionObserver();

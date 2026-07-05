@@ -147,6 +147,8 @@ body {
     height: 100%;
     display: block;
     object-fit: cover;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .vignette-overlay {
