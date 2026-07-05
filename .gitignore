@@ -1,0 +1,6 @@
+*.zip
+extracted_design/
+extracted_design_new/
+frames/
+.DS_Store
+Thumbs.db

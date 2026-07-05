@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafezza - Be Caffeinated</title>
+    <meta name="description" content="Experience Cafezza - where artisanal cold brew coffee meets botanical bliss. Slowly steeped Arabica coffee infused with fine effervescent fizz.">
+    <!-- Google Fonts & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Outfit:wght@300;400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Premium Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <h1 class="brand-logo-preload">CAFEZZA</h1>
+            <div class="loader-track">
+                <div id="loader-bar" class="loader-bar"></div>
+            </div>
+            <p id="loader-text" class="loader-text">Loading Cinematic Experience 0%</p>
+        </div>
+    </div>
+
+    <!-- Background Canvas Container -->
+    <div class="canvas-container">
+        <canvas id="animation-canvas"></canvas>
+        <div class="vignette-overlay"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="#" class="brand-logo" id="nav-logo">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUG8iquMHFFcltvvB4uKnsvQHVpHHmDNivRCs1PIDBOt7sJK04YHL4s6C8tyTKsmqaq1RrHqbPdcEkAf2aA3RHSZw5lMTZIIvkWwiS4_64Q7ucSH2UKLqwMJB0CyNH18iuK5zF2rbb_cqOzmT9aAz7lf-EOkQj9A4Z6aEGZSW8lknKJW5bXOkljK3Wp96lt8e63XjsJgPILriVyaPIAwm2lZF8HP30p-lNyGKmCA9IHtaK0vtdOxqSjP-c_SLVuNLFQA" alt="Cafezza Logo" class="logo-img">
+            </a>
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#section-hero" class="nav-link">Home</a>
+                <a href="#section-signature" class="nav-link">something delicious</a>
+                <a href="#section-location" class="nav-link">Location</a>
+                <a href="https://www.zomato.com/ahmedabad/cafezza-airport-gandhinagar-highway-gandhinagar/menu" target="_blank" class="nav-link">Menu</a>
+                <a href="#section-buy" class="btn-primary-nav">Order Now</a>
+            </nav>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Scrollable Content Overlay -->
+    <main class="scroll-content">
+        <!-- Hero Section -->
+        <div class="section-hero" id="section-hero">
+            <div class="hero-overlay">
+                <div class="hero-glass-card glass-panel">
+                    <span class="eyebrow" id="hero-eyebrow">REDEFINING REFRESHMENT</span>
+                    <h1 class="hero-title" id="hero-title">Be Caffeinated at<br><span class="accent-text">Cafezza</span></h1>
+                    <p class="hero-subtitle" id="hero-subtitle">We are not just a cafe; we're your daily dose of caffeinated happiness. Join us in savoring the finest brews &amp; vibrant conversations.</p>
+                    <div class="hero-actions">
+                        <a href="#section-signature" class="btn-primary">Explore Our Menu</a>
+                    </div>
+                </div>
+                <div class="scroll-indicator" id="hero-scroll-indicator">
+                    <span class="scroll-text">Scroll to explore</span>
+                    <div class="mouse-icon">
+                        <div class="wheel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Signature Offerings Section -->
+        <div class="section-signature" id="section-signature">
+            <div class="section-header solid-panel">
+                <span class="section-eyebrow">Curated Selection</span>
+                <h2 class="section-title">something delicious</h2>
+                <p class="section-subtitle">Crafted with precision, inspired by YOU</p>
+            </div>
+            
+            <div class="offerings-list">
+                <!-- Item 1: Bagel -->
+                <div class="offering-item item-left">
+                    <div class="offering-image-wrapper solid-panel">
+                        <img class="offering-img unforgettable-bagel-img" alt="unforgetttable bagel" src="unforgettable_bagel.png">
+                        <div class="card-badge badge-signature">Signature</div>
+                    </div>
+                    <div class="offering-info glass-panel">
+                        <div class="card-info-header">
+                            <h3 class="item-title">unforgetttable bagel</h3>
+                        </div>
+                        <p class="item-description">Meet the Bagel that's anything but ordinary. 🥯<br>Burrata, Caprese, and Focaccia-inspired flavors come together in a combination you'll keep coming back for.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2: fresh boba tea -->
+                <div class="offering-item item-right">
+                    <div class="offering-image-wrapper solid-panel">
+                        <img class="offering-img boba-tea-img" alt="fresh boba tea" src="fresh_boba_tea.png">
+                        <div class="card-badge badge-chilled">Chilled</div>
+                    </div>
+                    <div class="offering-info glass-panel">
+                        <div class="card-info-header">
+                            <h3 class="item-title">fresh boba tea</h3>
+                        </div>
+                        <p class="item-description">Perfectly Refreshing. One sip and you’re instantly in a tropical state of mind.<br><br>Bursting with flavour and loaded with chewy boba pearls, they’re the perfect companions for every Cafezza visit.<br><br>Which one are you picking?<br>Passion Fruit Boba Tea or Mango Boba Tea</p>
+                    </div>
+                </div>
+
+                <!-- Item 3: flaky nutella banana croissant -->
+                <div class="offering-item item-left">
+                    <div class="offering-image-wrapper solid-panel">
+                        <img class="offering-img croissant-img" alt="flaky nutella banana croissant" src="nutella_banana_croissant.png">
+                        <div class="card-badge badge-pastry">Pastry</div>
+                    </div>
+                    <div class="offering-info glass-panel">
+                        <div class="card-info-header">
+                            <h3 class="item-title">flaky nutella banana croissant</h3>
+                        </div>
+                        <p class="item-description">Flaky, golden layers that melt in your mouth instantly!<br><br>Warm Nutella hiding inside, ready to steal the show.<br><br>One bite and your sweet cravings have officially met their match.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buy / CTA Section -->
+        <div class="section-cta" id="section-buy">
+            <div class="cta-container">
+                <div class="cta-card solid-panel" id="card-cta">
+                    <span class="cta-badge-icon">eco</span>
+                    <h2 class="cta-title">Craving Cafezza at Home?</h2>
+                    <p class="cta-subtitle">Skip the line or enjoy our artisanal offerings from the comfort of your own space.</p>
+                    
+                    <div class="cta-actions">
+                        <a href="https://www.zomato.com/ahmedabad/cafezza-airport-gandhinagar-highway-gandhinagar" target="_blank" class="btn-order-now-cta" id="btn-buy-now">Order Now</a>
+                        <a href="https://www.zomato.com/ahmedabad/cafezza-airport-gandhinagar-highway-gandhinagar" target="_blank" class="btn-reserve-table-cta" id="btn-reserve-table">Reserve a Table</a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Location Section -->
+        <div class="section-location glass-panel" id="section-location">
+            <div class="location-container">
+                <div class="location-image-column solid-panel">
+                    <a href="https://www.google.com/maps/place/Cafezza+be+caffeinated/@23.1731881,72.6285188,14.5z/data=!4m6!3m5!1s0x395c2bb167d7ec11:0xb5dd070ca744e55b!8m2!3d23.1751735!4d72.6293019!16s%2Fg%2F11vf7xjg4s?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="location-map-link">
+                        <div class="location-image-wrapper">
+                            <img class="sanctuary-img" alt="Cafezza Sanctuary Map" src="cafezza_map.png">
+                            <div class="pin-container">
+                                <div class="map-pin">
+                                    <span class="material-symbols-outlined pin-icon">location_on</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="location-details-column solid-panel">
+                    <span class="location-eyebrow">Find Your Peace</span>
+                    <h2 class="location-title">Visit us at</h2>
+                    <p class="location-description">Step out of the bustle and into a space designed for pause. Lush greenery, natural light, and the aroma of roasted beans await.</p>
+                    
+                    <div class="info-details-grid">
+                        <div class="info-item">
+                            <span class="material-symbols-outlined info-icon">location_on</span>
+                            <div class="info-text">
+                                <h4>Address</h4>
+                                <p>5JGH+3P6, Kudasan-Por Rd,<br>Urjanagar 1, Kudasan,<br>Gandhinagar, Gujarat 382419</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="material-symbols-outlined info-icon">schedule</span>
+                            <div class="info-text">
+                                <h4>Hours</h4>
+                                <p>Mon - Sun: 11:00 AM - 10:45 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="location-actions">
+                        <a href="https://maps.google.com/?q=Cafezza+Kudasan+Gandhinagar" target="_blank" class="btn-maps">
+                            <span class="material-symbols-outlined btn-maps-icon">map</span>
+                            Open in Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-layout">
+        <div class="footer-container">
+            <div class="footer-col col-brand">
+                <img alt="Cafezza Logo" class="footer-logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQZYrfSWd2AcIKQ7Sabg0zLbjya6Wn2gLcv6p5A8FV5QGH7MB91LLYOlHjVaAEmxlHGhLs8aMjc2zJJf5EwJFQMCKtHDsk_Qcue4_HAvvXs7PmeusXiYlBANeVf2nxiv3vurBNBtxf3xGiAG6kZsDcYZiQrDCHzEfP3ohXA99rujt2DyjxRquhzRFU2GJRk3SBERxxfFY5FPcR4O5YVG7zONBjNzX7aBN10ZPtXSGZMBpzsrGggl294r7ezgsIhQVBFQ">
+                <p class="brand-desc">Cafezza Be Caffeinated. Savoring the finest brews and vibrant conversations in Kudasan.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/cafezza_be_caffeinated/" target="_blank" class="social-icon">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDULryAhhoVLq2fsj_AdU59wdqOZidNHJfMDbQnXU8brSuJVu9wakgNozCWc_JhYPtya0pYgGg7TY0eLLDqUnFVGhou1duBSnbAiwHJJsvKWHMIcVUYvLoeMzUR5B5hdXsnO9Z7epQwqriXuxBRyssl4N413JPL0wbNqNdS4T_9mBh6XoXjzslroguy6cP5D-jIZv3ZGSrZTsAUIpK5aJXChgFomAh_5RZNGj4RxOaTb7fDAsRCgx5PHj3VemhV9jajqA" alt="Instagram" style="width: 24px; height: 24px; object-contain: fill; filter: invert(0.85);">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h5>Menu Links</h5>
+                <ul>
+                    <li><a href="#section-hero">Home</a></li>
+                    <li><a href="#section-signature">something delicious</a></li>
+                    <li><a href="#section-location">Location</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h5>Contact</h5>
+                <ul class="contact-list">
+                    <li><span class="material-symbols-outlined footer-contact-icon">phone</span> +91 9879000097</li>
+                    <li><span class="material-symbols-outlined footer-contact-icon">location_on</span> Kudasan, Gandhinagar, Gujarat</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Cafezza Beverages Inc. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
