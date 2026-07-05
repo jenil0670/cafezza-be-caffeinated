@@ -4,3 +4,21 @@ extracted_design_new/
 frames/
 .DS_Store
 Thumbs.db
+
+# Android ignores
+android/.gradle/
+android/local.properties
+android/app/build/
+android/build/
+android/.idea/
+android/*.iml
+android/app/*.iml
+
+# iOS ignores
+ios/**/DerivedData/
+ios/**/xcuserdata/
+ios/**/*.xcworkspace/
+
+# Copied WebView Assets (Generated/Syncable)
+android/app/src/main/assets/
+ios/Cafezza/assets/
