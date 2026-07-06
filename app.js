@@ -188,7 +188,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (maxScrollTop <= 0) return;
 
         const scrollTop = window.scrollY || html.scrollTop;
-        const scrollFraction = scrollTop / maxScrollTop;
+        
+        // Find the signature section position dynamically
+        const signatureSection = sectionPositions.find(s => s.id === "section-signature");
+        const startScroll = signatureSection ? signatureSection.top : window.innerHeight;
+
+        let scrollFraction = 0;
+        if (maxScrollTop > startScroll) {
+            if (scrollTop > startScroll) {
+                scrollFraction = (scrollTop - startScroll) / (maxScrollTop - startScroll);
+                scrollFraction = Math.max(0, Math.min(1, scrollFraction));
+            } else {
+                scrollFraction = 0;
+            }
+        } else {
+            scrollFraction = scrollTop / maxScrollTop;
+        }
+
         targetFrameIndex = scrollFraction * (frameCount - 1);
 
         // Start animating loop if not already running
